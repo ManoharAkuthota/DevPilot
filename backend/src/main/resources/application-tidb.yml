@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${TIDB_HOST:gateway01.us-east-1.prod.aws.tidbcloud.com}:${TIDB_PORT:4000}/${TIDB_DATABASE:test}?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3&createDatabaseIfNotExist=true&useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${TIDB_USER}
+    password: ${TIDB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false

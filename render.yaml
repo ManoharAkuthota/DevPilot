@@ -1,0 +1,44 @@
+services:
+  # Spring Boot 3 Java 21 Backend Web Service
+  - type: web
+    name: devpilot-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: standard
+    region: oregon
+    healthCheckPath: /api/system/metrics
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: tidb
+      - key: TIDB_HOST
+        sync: false
+      - key: TIDB_PORT
+        value: "4000"
+      - key: TIDB_DATABASE
+        value: devpilot_db
+      - key: TIDB_USER
+        sync: false
+      - key: TIDB_PASSWORD
+        sync: false
+      - key: APP_JWT_SECRET
+        generateValue: true
+
+  # React 19 + Vite Static Site Frontend
+  - type: web
+    name: devpilot-frontend
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    plan: free
+    region: oregon
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: devpilot-backend
+          property: host

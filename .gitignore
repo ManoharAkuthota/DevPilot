@@ -1,0 +1,36 @@
+# Maven / Java
+backend/target/
+backend/*.jar
+backend/.mvn/wrapper/maven-wrapper.jar
+*.class
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+.npm
+npm-debug.log*
+
+# Playwright & Screenshots
+backend/data/screenshots/
+test-results/
+playwright-report/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

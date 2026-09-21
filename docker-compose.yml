@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  mysql:
+    image: mysql:8.0
+    container_name: devpilot-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devpilot_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - devpilot-network
+
+  # Spring Boot 3 Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: devpilot-backend
+    restart: on-failure
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: devpilot_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: llama3.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - backend_screenshots:/app/data/screenshots
+    networks:
+      - devpilot-network
+
+  # React 19 + Vite + Nginx Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: devpilot-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - devpilot-network
+
+  # Local Ollama AI Service (Optional local container)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: devpilot-ollama
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    networks:
+      - devpilot-network
+
+volumes:
+  mysql_data:
+    driver: local
+  backend_screenshots:
+    driver: local
+  ollama_models:
+    driver: local
+
+networks:
+  devpilot-network:
+    driver: bridge
