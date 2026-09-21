@@ -5,7 +5,7 @@ services:
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
-    plan: standard
+    plan: free
     region: singapore
     healthCheckPath: /api/system/metrics
     envVars:
@@ -30,15 +30,10 @@ services:
     runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/dist
-    plan: free
-    region: singapore
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          type: web
-          name: devpilot-backend
-          property: host
+        value: https://devpilot-backend.onrender.com

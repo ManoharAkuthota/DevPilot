@@ -8,6 +8,8 @@ COPY pom.xml .
 COPY .mvn .mvn
 COPY mvnw* .
 
+RUN chmod +x mvnw
+
 # Cache dependencies
 RUN ./mvnw dependency:go-offline -B || true
 
@@ -34,5 +36,5 @@ COPY --from=builder /app/target/devpilot-backend-1.0.0.jar app.jar
 EXPOSE 8080
 
 # Configure JVM memory and entrypoint
-ENV JAVA_OPTS="-Xms256m -Xmx1024m -XX:+UseG1GC"
+ENV JAVA_OPTS="-Xms128m -Xmx384m -XX:+UseG1GC"
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
