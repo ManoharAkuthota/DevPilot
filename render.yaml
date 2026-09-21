@@ -6,19 +6,19 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: standard
-    region: oregon
+    region: singapore
     healthCheckPath: /api/system/metrics
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: tidb
       - key: TIDB_HOST
-        sync: false
+        value: gateway01.ap-southeast-1.prod.aws.tidbcloud.com
       - key: TIDB_PORT
         value: "4000"
       - key: TIDB_DATABASE
         value: devpilot_db
       - key: TIDB_USER
-        sync: false
+        value: 3HVUhdVZBhSBCPs.root
       - key: TIDB_PASSWORD
         sync: false
       - key: APP_JWT_SECRET
@@ -31,7 +31,7 @@ services:
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/dist
     plan: free
-    region: oregon
+    region: singapore
     routes:
       - type: rewrite
         source: /*
