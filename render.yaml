@@ -20,7 +20,7 @@ services:
       - key: TIDB_USER
         value: 3HVUhdVZBhSBCPs.root
       - key: TIDB_PASSWORD
-        sync: false
+        value: 6BP74bdgTlFpWzrm
       - key: APP_JWT_SECRET
         generateValue: true
 

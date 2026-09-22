@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://${TIDB_HOST:gateway01.ap-southeast-1.prod.aws.tidbcloud.com}:${TIDB_PORT:4000}/${TIDB_DATABASE:devpilot_db}?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: ${TIDB_USER:3HVUhdVZBhSBCPs.root}
-    password: ${TIDB_PASSWORD}
+    password: ${TIDB_PASSWORD:6BP74bdgTlFpWzrm}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
