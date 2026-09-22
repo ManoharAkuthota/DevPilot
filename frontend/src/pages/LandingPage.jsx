@@ -12,6 +12,7 @@ import {
   GitBranch,
   ShieldCheck,
   CheckCircle2,
+  CheckSquare,
   ChevronDown,
   Star,
   Zap,
