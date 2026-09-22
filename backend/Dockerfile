@@ -3,13 +3,13 @@ FROM maven:3.9.9-eclipse-temurin-21-alpine AS builder
 
 WORKDIR /app
 
-# Cache dependencies
+# Copy custom settings.xml with GCS mirror to prevent HTTP 429 rate limiting
+COPY settings.xml .
 COPY pom.xml .
-RUN mvn dependency:go-offline -B || true
 
-# Copy source code and package
+# Copy source code and build production JAR
 COPY src src
-RUN mvn clean package -DskipTests
+RUN mvn -s settings.xml clean package -DskipTests -B
 
 # Stage 2: Minimal Production JRE Image
 FROM eclipse-temurin:21-jre-alpine
