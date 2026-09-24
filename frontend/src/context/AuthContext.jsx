@@ -39,7 +39,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const demoLogin = async () => {
-    return await login('alex@devpilot.io', 'DevPilot2025!');
+    try {
+      return await login('manohar@devpilot.io', 'DevPilot2025!');
+    } catch {
+      return await login('alex@devpilot.io', 'DevPilot2025!');
+    }
   };
 
   const logout = async () => {

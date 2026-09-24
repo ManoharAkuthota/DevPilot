@@ -25,14 +25,13 @@ export const ProfilePage = () => {
   const { success } = useNotification();
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
 
-  // Parse skills: "Java 21:95,Spring Boot:92,React 19:90,TypeScript:88,Tailwind CSS:94,Docker & K8s:85,AI & Prompt Engineering:89"
-  const rawSkills = user?.skills || 'Java 21:95,Spring Boot:92,React 19:90,TypeScript:88,Tailwind CSS:94,Docker & K8s:85,AI & Prompt Engineering:89';
+  const rawSkills = user?.skills || 'Java 21 & Spring Boot:95,React 19 & Next.js:92,Python & AI/ML:88,Cloud Databases (TiDB/MySQL):92,Docker & CI/CD:88,System Architecture:94';
   const parsedSkills = rawSkills.split(',').map((item) => {
     const [name, level] = item.split(':');
     return { name: name.trim(), level: level ? parseInt(level) : 85 };
   });
 
-  const techStackList = (user?.techStack || 'React 19, Java 21, Spring Boot 3, Tailwind CSS, Docker, Kubernetes, Ollama, Playwright, MySQL').split(',');
+  const techStackList = (user?.techStack || 'Java 21, Spring Boot 3, React 19, Python, TiDB Cloud, Docker, TypeScript, Tailwind CSS, Playwright, Machine Learning').split(',');
 
   const handlePrintResume = () => {
     window.print();
@@ -40,11 +39,11 @@ export const ProfilePage = () => {
   };
 
   const handleDownloadMarkdownResume = () => {
-    const resumeText = `# ${user?.fullName || user?.username} - Senior Software Architect
+    const resumeText = `# ${user?.fullName || user?.username} - Full-Stack & AI Software Engineer
 Email: ${user?.email}
-Portfolio: ${user?.portfolioUrl || 'https://alexvance.dev'}
-GitHub: https://github.com/${user?.githubUsername || 'alexvance-ai'}
-Productivity Score: ${user?.productivityScore || 94}%
+Portfolio: ${user?.portfolioUrl || 'https://github.com/ManoharAkuthota'}
+GitHub: https://github.com/${user?.githubUsername || 'ManoharAkuthota'}
+Productivity Score: ${user?.productivityScore || 96}%
 
 ## Professional Summary
 ${user?.bio}
@@ -74,17 +73,17 @@ Generated with DevPilot AI Developer Copilot Dashboard.
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-6">
             <img
-              src={user?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80'}
-              alt={user?.fullName}
+              src={user?.avatarUrl || 'https://avatars.githubusercontent.com/u/171120476?v=4'}
+              alt={user?.fullName || 'Manohar Akuthota'}
               className="w-24 h-24 rounded-2xl object-cover ring-2 ring-blue-500/50 shadow-2xl"
             />
             <div>
               <div className="flex items-center gap-3">
                 <h1 className="text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-                  {user?.fullName || user?.username}
+                  {user?.fullName || 'Manohar Akuthota'}
                 </h1>
                 <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">
-                  Senior Staff Architect
+                  Full-Stack & AI Engineer
                 </span>
               </div>
               <p className="text-xs text-slate-300 mt-1 max-w-xl leading-relaxed">{user?.bio}</p>

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
+    List<Task> findByUser(User user);
     List<Task> findByUserOrderByPositionIndexAscCreatedAtDesc(User user);
     List<Task> findByUserAndStatusOrderByPositionIndexAsc(User user, Task.Status status);
     List<Task> findByUserAndDueDateBetween(User user, LocalDate start, LocalDate end);

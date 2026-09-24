@@ -406,12 +406,12 @@ export const LandingPage = () => {
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <span className="text-base font-bold text-white">DevPilot</span>
-            <span className="text-xs text-slate-500">© 2025 DevPilot Technologies Inc. All rights reserved.</span>
+            <span className="text-xs text-slate-500">© 2025 Manohar Akuthota. Engineered with React 19, Spring Boot 3 & TiDB Cloud.</span>
           </div>
 
           <div className="flex items-center gap-6 text-xs text-slate-400">
-            <a href="#features" className="hover:text-white">Features</a>
-            <a href="#workspace" className="hover:text-white">Architecture</a>
+            <a href="https://github.com/ManoharAkuthota" target="_blank" rel="noreferrer" className="hover:text-white">GitHub: @ManoharAkuthota</a>
+            <a href="https://github.com/ManoharAkuthota/DevPilot" target="_blank" rel="noreferrer" className="hover:text-white">Repository</a>
             <Link to="/login" className="hover:text-white">Sign In</Link>
             <Link to="/register" className="text-blue-400 hover:underline">Get Started</Link>
           </div>

@@ -233,73 +233,86 @@ public class GitHubService {
 
     private void ensureFallbackProfileData(GitHubProfile profile, String username) {
         if (profile.getAvatarUrl() == null) {
-            profile.setAvatarUrl("https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80");
+            profile.setAvatarUrl("https://avatars.githubusercontent.com/u/171120476?v=4");
         }
         if (profile.getBio() == null) {
-            profile.setBio("Building high-throughput scalable microservices and AI-accelerated developer tooling.");
+            profile.setBio("Full-Stack & AI Software Engineer specializing in Java, Spring Boot 3, React 19, Python, and Autonomous AI Developer Agents.");
         }
-        profile.setPublicRepos(24);
-        profile.setFollowers(342);
-        profile.setFollowing(128);
-        profile.setTotalStars(894);
-        profile.setTotalForks(215);
-        profile.setContributionsCount(1432);
-        profile.setLanguagesJson("{\"TypeScript\": 45, \"Java\": 30, \"Python\": 15, \"Go\": 10}");
-        profile.setCommitActivityJson("[8, 14, 19, 25, 32, 28, 41, 36, 45, 52, 48, 60, 58, 64]");
+        profile.setPublicRepos(16);
+        profile.setFollowers(4);
+        profile.setFollowing(2);
+        profile.setTotalStars(48);
+        profile.setTotalForks(14);
+        profile.setContributionsCount(420);
+        profile.setLanguagesJson("{\"Java\": 35, \"JavaScript\": 25, \"Python\": 20, \"HTML\": 12, \"CSS\": 8}");
+        profile.setCommitActivityJson("[4, 8, 12, 16, 14, 22, 18, 25, 30, 28, 35, 42, 38, 45]");
 
         if (profile.getRepositories().isEmpty()) {
             List<RepositoryEntity> sampleRepos = List.of(
                     RepositoryEntity.builder()
                             .profile(profile)
-                            .name("devpilot-core")
-                            .fullName(username + "/devpilot-core")
-                            .description("Next-gen AI developer copilot dashboard and workflow orchestrator.")
-                            .htmlUrl("https://github.com/" + username + "/devpilot-core")
+                            .name("DevPilot")
+                            .fullName("ManoharAkuthota/DevPilot")
+                            .description("Next-gen AI developer copilot dashboard and workflow orchestrator with Spring Boot 3, React 19, and TiDB Serverless.")
+                            .htmlUrl("https://github.com/ManoharAkuthota/DevPilot")
                             .language("Java")
-                            .starsCount(342)
-                            .forksCount(88)
-                            .openIssuesCount(4)
-                            .aiSummary("Microservice architecture featuring reactive streams and automated CI/CD pipeline.")
-                            .repoUpdatedAt(LocalDateTime.now().minusHours(3))
+                            .starsCount(18)
+                            .forksCount(5)
+                            .openIssuesCount(0)
+                            .aiSummary("Production-ready AI developer copilot featuring multi-provider Google Gemini and Groq Cloud LLMs with TiDB Cloud persistence.")
+                            .repoUpdatedAt(LocalDateTime.now())
                             .build(),
                     RepositoryEntity.builder()
                             .profile(profile)
-                            .name("agentic-playwright-runner")
-                            .fullName(username + "/agentic-playwright-runner")
-                            .description("Headless browser automation engine with synthetic user interaction scripts.")
-                            .htmlUrl("https://github.com/" + username + "/agentic-playwright-runner")
-                            .language("TypeScript")
-                            .starsCount(275)
-                            .forksCount(56)
-                            .openIssuesCount(2)
-                            .aiSummary("Playwright engine with snapshot testing, screen capture, and form completion.")
+                            .name("SmartVote-AI")
+                            .fullName("ManoharAkuthota/SmartVote-AI")
+                            .description("AI-driven secure election & voting verification platform with biometric & facial validation.")
+                            .htmlUrl("https://github.com/ManoharAkuthota/SmartVote-AI")
+                            .language("Python")
+                            .starsCount(12)
+                            .forksCount(3)
+                            .openIssuesCount(1)
+                            .aiSummary("Computer vision and cryptographic voting architecture ensuring tamper-evident election security.")
                             .repoUpdatedAt(LocalDateTime.now().minusDays(1))
                             .build(),
                     RepositoryEntity.builder()
                             .profile(profile)
-                            .name("ollama-copilot-bridge")
-                            .fullName(username + "/ollama-copilot-bridge")
-                            .description("High-performance local LLM bridge with automatic prompt synthesis.")
-                            .htmlUrl("https://github.com/" + username + "/ollama-copilot-bridge")
-                            .language("Python")
-                            .starsCount(189)
-                            .forksCount(42)
-                            .openIssuesCount(1)
-                            .aiSummary("Zero-latency LLM gateway supporting Llama 3.1 with streaming token responses.")
+                            .name("ai-job-agent")
+                            .fullName("ManoharAkuthota/ai-job-agent")
+                            .description("Autonomous AI agent for automated job searching, resume ATS optimization, and interview preparation.")
+                            .htmlUrl("https://github.com/ManoharAkuthota/ai-job-agent")
+                            .language("TypeScript")
+                            .starsCount(8)
+                            .forksCount(2)
+                            .openIssuesCount(0)
+                            .aiSummary("Autonomous LLM agent leveraging vector search and prompt engineering for tailored job applications.")
                             .repoUpdatedAt(LocalDateTime.now().minusDays(2))
                             .build(),
                     RepositoryEntity.builder()
                             .profile(profile)
-                            .name("glassmorphic-ui-kit")
-                            .fullName(username + "/glassmorphic-ui-kit")
-                            .description("Futuristic dark UI component library with Tailwind CSS and Framer Motion.")
-                            .htmlUrl("https://github.com/" + username + "/glassmorphic-ui-kit")
-                            .language("TypeScript")
-                            .starsCount(88)
-                            .forksCount(29)
+                            .name("BankingApplication")
+                            .fullName("ManoharAkuthota/BankingApplication")
+                            .description("Enterprise core banking architecture featuring secure transaction accounting and balance transfers.")
+                            .htmlUrl("https://github.com/ManoharAkuthota/BankingApplication")
+                            .language("Java")
+                            .starsCount(6)
+                            .forksCount(2)
                             .openIssuesCount(0)
-                            .aiSummary("Responsive glass design tokens with GPU-accelerated motion blur.")
-                            .repoUpdatedAt(LocalDateTime.now().minusDays(4))
+                            .aiSummary("ACID-compliant banking microservice with double-entry ledger bookkeeping and JWT authorization.")
+                            .repoUpdatedAt(LocalDateTime.now().minusDays(3))
+                            .build(),
+                    RepositoryEntity.builder()
+                            .profile(profile)
+                            .name("Drowsiness_Detection")
+                            .fullName("ManoharAkuthota/Drowsiness_Detection")
+                            .description("Computer vision & machine learning driver safety detection with OpenCV and eye aspect ratio analysis.")
+                            .htmlUrl("https://github.com/ManoharAkuthota/Drowsiness_Detection")
+                            .language("Python")
+                            .starsCount(9)
+                            .forksCount(3)
+                            .openIssuesCount(0)
+                            .aiSummary("Real-time facial landmark detection tracking blink frequency to avert distracted or drowsy driving.")
+                            .repoUpdatedAt(LocalDateTime.now().minusDays(5))
                             .build()
             );
 

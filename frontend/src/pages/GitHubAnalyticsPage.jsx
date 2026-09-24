@@ -27,7 +27,7 @@ export const GitHubAnalyticsPage = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [sortBy, setSortBy] = useState('stars'); // stars, forks, updated
   const [connectModalOpen, setConnectModalOpen] = useState(false);
-  const [usernameInput, setUsernameInput] = useState('');
+  const [usernameInput, setUsernameInput] = useState('ManoharAkuthota');
   const [tokenInput, setTokenInput] = useState('');
   const [connecting, setConnecting] = useState(false);
   const [aiGeneratingId, setAiGeneratingId] = useState(null);
@@ -96,7 +96,7 @@ export const GitHubAnalyticsPage = () => {
     });
 
   // Language Doughnut Chart Data
-  let languagesObj = { TypeScript: 42, Java: 30, Python: 16, Go: 8, CSS: 4 };
+  let languagesObj = { Java: 35, JavaScript: 25, Python: 20, HTML: 12, CSS: 8 };
   if (profile?.languagesJson) {
     try {
       languagesObj = JSON.parse(profile.languagesJson);

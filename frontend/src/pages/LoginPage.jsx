@@ -41,7 +41,7 @@ export const LoginPage = () => {
     try {
       setDemoLoading(true);
       await demoLogin();
-      success('Logged in with Alex Vance demo profile!');
+      success('Welcome back, Manohar!');
       navigate('/dashboard');
     } catch (err) {
       error(err.message || 'Demo login failed');
@@ -72,7 +72,7 @@ export const LoginPage = () => {
             <ShieldCheck className="w-5 h-5 text-blue-400 shrink-0" />
             <div>
               <p className="text-xs font-bold text-white">Instant Demo Access</p>
-              <p className="text-[11px] text-blue-300/80">alex@devpilot.io / DevPilot2025!</p>
+              <p className="text-[11px] text-blue-300/80">manohar@devpilot.io / DevPilot2025!</p>
             </div>
           </div>
           <AnimatedButton
