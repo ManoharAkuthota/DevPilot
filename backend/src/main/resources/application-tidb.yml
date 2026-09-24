@@ -4,9 +4,15 @@ spring:
     username: ${TIDB_USER:3HVUhdVZBhSBCPs.root}
     password: ${TIDB_PASSWORD:6BP74bdgTlFpWzrm}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 5
+      connection-timeout: 20000
+      initialization-fail-timeout: -1
   jpa:
+    open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     properties:
       hibernate:

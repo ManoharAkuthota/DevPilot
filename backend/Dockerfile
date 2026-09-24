@@ -29,6 +29,6 @@ COPY --from=builder /app/target/devpilot-backend-1.0.0.jar app.jar
 # Expose backend REST port
 EXPOSE 8080
 
-# Configure JVM memory and entrypoint
-ENV JAVA_OPTS="-Xms128m -Xmx384m -XX:+UseG1GC"
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+# Configure JVM memory and entrypoint optimized for low-vCPU cloud containers
+ENV JAVA_OPTS="-Xms128m -Xmx384m -XX:+UseSerialGC -XX:TieredStopAtLevel=1"
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar app.jar"]

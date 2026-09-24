@@ -1,6 +1,8 @@
 spring:
   application:
     name: devpilot-backend
+  main:
+    banner-mode: "off"
   profiles:
     active: dev
   jackson:
