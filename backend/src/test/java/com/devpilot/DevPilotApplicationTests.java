@@ -45,15 +45,25 @@ class DevPilotApplicationTests {
     @Test
     void testUserSeedingAndLogin() {
         // User seeded by DataInitializer
-        assertTrue(userRepository.existsByEmail("alex@devpilot.io"));
+        assertTrue(userRepository.existsByEmail("manohar@devpilot.io"));
 
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsernameOrEmail("alex@devpilot.io");
-        loginRequest.setPassword("DevPilot2025!");
+        // Test primary login with Manohar credentials
+        LoginRequest manoharLogin = new LoginRequest();
+        manoharLogin.setUsernameOrEmail("manohar@devpilot.io");
+        manoharLogin.setPassword("DevPilot2025!");
 
-        var authResponse = authService.login(loginRequest);
-        assertNotNull(authResponse.getAccessToken());
-        assertNotNull(authResponse.getRefreshToken());
-        assertEquals("alexvance", authResponse.getUser().getUsername());
+        var manoharResponse = authService.login(manoharLogin);
+        assertNotNull(manoharResponse.getAccessToken());
+        assertNotNull(manoharResponse.getRefreshToken());
+        assertEquals("manohar", manoharResponse.getUser().getUsername());
+
+        // Test alias login with Alex credentials
+        LoginRequest alexLogin = new LoginRequest();
+        alexLogin.setUsernameOrEmail("alex@devpilot.io");
+        alexLogin.setPassword("DevPilot2025!");
+
+        var alexResponse = authService.login(alexLogin);
+        assertNotNull(alexResponse.getAccessToken());
+        assertEquals("manohar", alexResponse.getUser().getUsername());
     }
 }

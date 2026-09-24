@@ -353,7 +353,7 @@ export const DashboardPage = () => {
               },
               {
                 icon: <GitBranch className="w-4 h-4 text-blue-400" />,
-                title: 'Commit pushed to alexvance-ai/devpilot-core',
+                title: 'Commit pushed to ManoharAkuthota/DevPilot',
                 time: '1h ago',
                 tag: 'GitHub',
               },

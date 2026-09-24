@@ -26,6 +26,11 @@ public class TiDBConnectionTest {
                         System.out.println("TiDB Server Verified: " + rs.getString(1));
                     }
                 }
+                try (ResultSet rs = stmt.executeQuery("SELECT id, username, email, full_name FROM users")) {
+                    while (rs.next()) {
+                        System.out.println("USER ROW: id=" + rs.getLong("id") + ", username=" + rs.getString("username") + ", email=" + rs.getString("email") + ", name=" + rs.getString("full_name"));
+                    }
+                }
             }
         } catch (Exception ex) {
             System.out.println("TiDB connection test note: " + ex.getMessage());

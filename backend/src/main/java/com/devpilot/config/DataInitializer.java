@@ -35,7 +35,8 @@ public class DataInitializer implements CommandLineRunner {
         log.info("Synchronizing DevPilot system profiles and Manohar Akuthota developer dataset...");
 
         // 1. Admin User
-        User admin = userRepository.findByUsernameOrEmail("admin@devpilot.io", "admin")
+        User admin = userRepository.findByUsername("admin")
+                .or(() -> userRepository.findByEmail("admin@devpilot.io"))
                 .orElse(null);
 
         if (admin == null) {
@@ -49,17 +50,18 @@ public class DataInitializer implements CommandLineRunner {
                     .productivityScore(98)
                     .enabled(true)
                     .build();
-            userRepository.save(admin);
+            admin = userRepository.save(admin);
+        } else {
+            admin.setPassword(passwordEncoder.encode("DevPilot2025!"));
+            admin = userRepository.save(admin);
         }
 
         // 2. Developer User (Manohar Akuthota)
-        User manohar = userRepository.findByUsernameOrEmail("manohar@devpilot.io", "manohar")
+        User manohar = userRepository.findByUsername("manohar")
+                .or(() -> userRepository.findByEmail("manohar@devpilot.io"))
+                .or(() -> userRepository.findByUsername("alexvance"))
+                .or(() -> userRepository.findByEmail("alex@devpilot.io"))
                 .orElse(null);
-
-        if (manohar == null) {
-            manohar = userRepository.findByUsernameOrEmail("alex@devpilot.io", "alexvance")
-                    .orElse(null);
-        }
 
         if (manohar == null) {
             manohar = User.builder()
@@ -92,24 +94,6 @@ public class DataInitializer implements CommandLineRunner {
             manohar.setProductivityScore(96);
             manohar.setPassword(passwordEncoder.encode("DevPilot2025!"));
             manohar = userRepository.save(manohar);
-        }
-
-        // Backward compatibility: ensure alex@devpilot.io also works
-        if (userRepository.findByUsernameOrEmail("alex@devpilot.io", "alexvance").isEmpty()) {
-            User alexAlias = User.builder()
-                    .username("alexvance")
-                    .email("alex@devpilot.io")
-                    .password(passwordEncoder.encode("DevPilot2025!"))
-                    .fullName("Manohar Akuthota")
-                    .bio("Full-Stack & AI Software Engineer")
-                    .avatarUrl("https://avatars.githubusercontent.com/u/171120476?v=4")
-                    .githubUsername("ManoharAkuthota")
-                    .portfolioUrl("https://github.com/ManoharAkuthota")
-                    .techStack("Java 21, Spring Boot 3, React 19, Python, TiDB Cloud")
-                    .role(Role.ROLE_USER)
-                    .enabled(true)
-                    .build();
-            userRepository.save(alexAlias);
         }
 
         // 3. Seed Manohar Akuthota's GitHub Profile & Repositories

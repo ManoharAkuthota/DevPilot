@@ -156,7 +156,7 @@ export const GitHubAnalyticsPage = () => {
             />
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-extrabold text-white tracking-tight">@{profile?.username || 'alexvance-ai'}</h1>
+                <h1 className="text-2xl font-extrabold text-white tracking-tight">@{profile?.username || 'ManoharAkuthota'}</h1>
                 <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
                   GitHub Connected
                 </span>

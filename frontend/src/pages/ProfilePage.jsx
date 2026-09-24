@@ -200,8 +200,8 @@ Generated with DevPilot AI Developer Copilot Dashboard.
           <div className="border-b border-white/10 pb-4 flex justify-between items-start">
             <div>
               <h2 className="text-xl font-bold text-white">{user?.fullName || user?.username}</h2>
-              <p className="text-xs text-blue-400 font-semibold">Senior Software & AI Solutions Architect</p>
-              <p className="text-[11px] text-slate-400 mt-1">{user?.email} • {user?.portfolioUrl || 'https://alexvance.dev'}</p>
+              <p className="text-xs text-blue-400 font-semibold">Full-Stack & AI Software Engineer</p>
+              <p className="text-[11px] text-slate-400 mt-1">{user?.email} • {user?.portfolioUrl || 'https://github.com/ManoharAkuthota'}</p>
             </div>
             <span className="text-[10px] px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-bold">
               Productivity: {user?.productivityScore || 94}%
