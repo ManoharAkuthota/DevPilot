@@ -1,3 +1,23 @@
+export const getApiBaseUrl = () => {
+  let url = localStorage.getItem('devpilot_backend_url') || import.meta.env.VITE_API_BASE_URL || '';
+  if (url) {
+    url = url.trim().replace(/\/+$/, '');
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://' + url;
+    }
+  }
+  return url;
+};
+
+export const setApiBaseUrl = (url) => {
+  if (url && url.trim()) {
+    const clean = url.trim().replace(/\/+$/, '');
+    localStorage.setItem('devpilot_backend_url', clean);
+  } else {
+    localStorage.removeItem('devpilot_backend_url');
+  }
+};
+
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 export const PROMPT_TEMPLATES = [

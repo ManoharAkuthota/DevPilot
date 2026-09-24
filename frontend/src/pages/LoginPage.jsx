@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
-import { Sparkles, Mail, Lock, ArrowRight, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import { Sparkles, Mail, Lock, ArrowRight, Eye, EyeOff, ShieldCheck, Server, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
 import { GlassCard } from '../components/common/GlassCard';
 import { AnimatedButton } from '../components/common/AnimatedButton';
 import { ParticleBackground } from '../components/layout/ParticleBackground';
+import { getApiBaseUrl, setApiBaseUrl } from '../utils/constants';
 
 export const LoginPage = () => {
   const { login, demoLogin } = useAuth();
@@ -17,6 +18,50 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [demoLoading, setDemoLoading] = useState(false);
+
+  const [backendUrl, setBackendUrl] = useState(() => getApiBaseUrl());
+  const [showBackendConfig, setShowBackendConfig] = useState(false);
+  const [pingLoading, setPingLoading] = useState(false);
+  const [pingResult, setPingResult] = useState(null);
+
+  const testBackendConnection = async (urlToTest) => {
+    let target = (urlToTest !== undefined ? urlToTest : backendUrl) || '';
+    target = target.trim().replace(/\/+$/, '');
+    if (target && !target.startsWith('http://') && !target.startsWith('https://')) {
+      target = 'https://' + target;
+    }
+    setPingLoading(true);
+    setPingResult(null);
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 9000);
+      const res = await fetch(`${target}/api/system/metrics`, {
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        setPingResult({ ok: true, message: 'Backend connected! Status 200 OK.' });
+        success('Backend connected successfully!');
+      } else {
+        setPingResult({ ok: false, message: `Server returned HTTP ${res.status}.` });
+      }
+    } catch (err) {
+      setPingResult({
+        ok: false,
+        message: err.name === 'AbortError'
+          ? 'Timeout (9s). Render free tier may be waking up (~50s) or URL is unreachable.'
+          : 'Failed to connect. Check URL or verify backend is deployed.',
+      });
+    } finally {
+      setPingLoading(false);
+    }
+  };
+
+  const handleSaveBackendUrl = () => {
+    setApiBaseUrl(backendUrl);
+    success('Backend URL saved!');
+    testBackendConnection(backendUrl);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +76,13 @@ export const LoginPage = () => {
       success('Welcome back to DevPilot!');
       navigate('/dashboard');
     } catch (err) {
-      error(err.message || 'Authentication failed. Please check credentials.');
+      const msg = err.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('Load failed')) {
+        error(`Backend unreachable at ${getApiBaseUrl() || 'default URL'}. Service may be waking up or URL needs updating.`);
+        setShowBackendConfig(true);
+      } else {
+        error(msg || 'Authentication failed. Please check credentials.');
+      }
     } finally {
       setLoading(false);
     }
@@ -44,7 +95,13 @@ export const LoginPage = () => {
       success('Welcome back, Manohar!');
       navigate('/dashboard');
     } catch (err) {
-      error(err.message || 'Demo login failed');
+      const msg = err.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('Load failed')) {
+        error(`Backend unreachable at ${getApiBaseUrl() || 'default URL'}. Service may be waking up or URL needs updating.`);
+        setShowBackendConfig(true);
+      } else {
+        error(msg || 'Demo login failed');
+      }
     } finally {
       setDemoLoading(false);
     }
@@ -159,6 +216,69 @@ export const LoginPage = () => {
             </p>
           </div>
         </GlassCard>
+
+        {/* Backend Server Connection Drawer */}
+        <div className="mt-4 p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl text-xs">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-slate-400 overflow-hidden">
+              <Server className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+              <span className="shrink-0">Backend API:</span>
+              <span className="text-slate-200 font-mono text-[11px] truncate max-w-[170px]" title={backendUrl || 'Default'}>
+                {backendUrl || '(Auto / Same Origin)'}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowBackendConfig(!showBackendConfig)}
+              className="text-blue-400 hover:text-blue-300 font-semibold text-[11px] underline shrink-0 ml-2"
+            >
+              {showBackendConfig ? 'Close' : 'Configure URL'}
+            </button>
+          </div>
+
+          {showBackendConfig && (
+            <div className="mt-3 pt-3 border-t border-white/10 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <label className="text-[11px] font-semibold text-slate-300">
+                  Backend Server URL
+                </label>
+                <span className="text-[10px] text-slate-400">Render or localhost:8080</span>
+              </div>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={backendUrl}
+                  onChange={(e) => setBackendUrl(e.target.value)}
+                  placeholder="https://devpilot-backend-xxxx.onrender.com"
+                  className="flex-1 px-3 py-1.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-mono"
+                />
+                <button
+                  type="button"
+                  onClick={handleSaveBackendUrl}
+                  className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold shrink-0"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => testBackendConnection(backendUrl)}
+                  disabled={pingLoading}
+                  className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold shrink-0 flex items-center gap-1"
+                >
+                  <RefreshCw className={`w-3 h-3 ${pingLoading ? 'animate-spin' : ''}`} />
+                  Test
+                </button>
+              </div>
+
+              {pingResult && (
+                <div className={`p-2.5 rounded-xl text-[11px] flex items-center gap-2 ${pingResult.ok ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
+                  {pingResult.ok ? <CheckCircle2 className="w-3.5 h-3.5 shrink-0" /> : <AlertCircle className="w-3.5 h-3.5 shrink-0" />}
+                  <span>{pingResult.message}</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

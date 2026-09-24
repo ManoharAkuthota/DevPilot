@@ -1,8 +1,8 @@
-import { API_BASE_URL } from '../utils/constants';
+import { getApiBaseUrl } from '../utils/constants';
 
 class ApiClient {
-  constructor() {
-    this.baseUrl = API_BASE_URL;
+  getBaseUrl() {
+    return getApiBaseUrl();
   }
 
   getHeaders() {
@@ -20,7 +20,7 @@ class ApiClient {
   }
 
   async request(endpoint, options = {}) {
-    const url = `${this.baseUrl}${endpoint}`;
+    const url = `${this.getBaseUrl()}${endpoint}`;
     const headers = { ...this.getHeaders(), ...options.headers };
 
     try {
@@ -71,7 +71,7 @@ class ApiClient {
     if (!refreshToken) return false;
 
     try {
-      const response = await fetch(`${this.baseUrl}/api/auth/refresh`, {
+      const response = await fetch(`${this.getBaseUrl()}/api/auth/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken }),
