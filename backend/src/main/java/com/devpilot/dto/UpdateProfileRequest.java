@@ -12,4 +12,6 @@ public class UpdateProfileRequest {
     private String portfolioUrl;
     private String githubUsername;
     private Integer productivityScore;
+    private String aiProvider;
+    private String aiApiKey;
 }

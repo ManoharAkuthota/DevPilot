@@ -58,6 +58,12 @@ public class User {
     @Builder.Default
     private Integer productivityScore = 88;
 
+    @Column(name = "ai_provider", length = 30)
+    private String aiProvider; // "gemini", "groq", "ollama", "auto"
+
+    @Column(name = "ai_api_key", length = 255)
+    private String aiApiKey;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     @Builder.Default

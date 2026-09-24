@@ -24,6 +24,8 @@ public class UserProfileResponse {
     private String portfolioUrl;
     private String githubUsername;
     private Integer productivityScore;
+    private String aiProvider;
+    private String aiApiKey;
     private Role role;
     private LocalDateTime createdAt;
 }

@@ -9,6 +9,13 @@ export const PROMPT_TEMPLATES = [
     prompt: 'Analyze this code for potential memory leaks, unhandled exceptions, and race conditions.',
   },
   {
+    id: 'UNIT_TEST',
+    title: 'Unit Tests Generator',
+    icon: 'CheckSquare',
+    description: 'Generate comprehensive JUnit 5 or Vitest/Jest unit test suites with boundary cases.',
+    prompt: 'Generate an exhaustive unit test suite with positive, negative, and edge test cases.',
+  },
+  {
     id: 'REFACTOR',
     title: 'Code Refactoring',
     icon: 'Zap',

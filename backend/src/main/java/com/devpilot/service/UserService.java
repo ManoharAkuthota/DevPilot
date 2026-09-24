@@ -38,6 +38,8 @@ public class UserService {
         if (request.getPortfolioUrl() != null) user.setPortfolioUrl(request.getPortfolioUrl());
         if (request.getGithubUsername() != null) user.setGithubUsername(request.getGithubUsername());
         if (request.getProductivityScore() != null) user.setProductivityScore(request.getProductivityScore());
+        if (request.getAiProvider() != null) user.setAiProvider(request.getAiProvider());
+        if (request.getAiApiKey() != null) user.setAiApiKey(request.getAiApiKey());
 
         User updatedUser = userRepository.save(user);
         return authService.mapToUserProfile(updatedUser);

@@ -161,8 +161,17 @@ public class AuthService {
                 .portfolioUrl(user.getPortfolioUrl())
                 .githubUsername(user.getGithubUsername())
                 .productivityScore(user.getProductivityScore())
+                .aiProvider(user.getAiProvider())
+                .aiApiKey(user.getAiApiKey() != null && !user.getAiApiKey().isBlank()
+                        ? maskApiKey(user.getAiApiKey())
+                        : null)
                 .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .build();
+    }
+
+    private String maskApiKey(String key) {
+        if (key == null || key.length() < 8) return "••••••••";
+        return key.substring(0, 4) + "••••••••" + key.substring(key.length() - 4);
     }
 }

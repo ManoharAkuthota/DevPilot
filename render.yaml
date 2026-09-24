@@ -25,6 +25,10 @@ services:
         generateValue: true
       - key: PORT
         value: "8080"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
 
   # React 19 + Vite Static Site Frontend
   - type: web
