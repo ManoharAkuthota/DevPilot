@@ -42,7 +42,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          type: web
-          name: devpilot-backend
-          property: host
+        value: https://devpilot-backend-5dy1.onrender.com

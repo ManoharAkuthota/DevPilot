@@ -1,5 +1,12 @@
 export const getApiBaseUrl = () => {
-  let url = localStorage.getItem('devpilot_backend_url') || import.meta.env.VITE_API_BASE_URL || '';
+  let url = localStorage.getItem('devpilot_backend_url');
+  if (url === 'https://devpilot-backend.onrender.com' || url === 'http://devpilot-backend.onrender.com') {
+    url = 'https://devpilot-backend-5dy1.onrender.com';
+    localStorage.setItem('devpilot_backend_url', url);
+  }
+  if (!url) {
+    url = import.meta.env.VITE_API_BASE_URL || 'https://devpilot-backend-5dy1.onrender.com';
+  }
   if (url) {
     url = url.trim().replace(/\/+$/, '');
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
